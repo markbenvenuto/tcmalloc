@@ -669,8 +669,9 @@ static inline ABSL_ATTRIBUTE_ALWAYS_INLINE bool TcmallocSlab_Internal_Push(
         [cached_slabs_mask] "r"(TCMALLOC_CACHED_SLABS_MASK),
 #endif
         [size_class_lsl3] "r"(size_class_lsl3), [item] "r"(item)
-      : TCMALLOC_RSEQ_CLOBBER, "cc", "memory"
+      : TCMALLOC_RSEQ_CLOBBER, "memory"
 #if TCMALLOC_INTERNAL_PERCPU_USE_RSEQ_ASM_GOTO_OUTPUT
+      , "cc"
       : overflow_label
 #endif
   );
@@ -865,8 +866,9 @@ inline ABSL_ATTRIBUTE_ALWAYS_INLINE void* TcmallocSlab::Pop(size_t size_class) {
         [cached_slabs_mask] "r"(TCMALLOC_CACHED_SLABS_MASK),
 #endif
         [size_class] "r"(size_class), [size_class_lsl3] "r"(size_class << 3)
-      : TCMALLOC_RSEQ_CLOBBER, "cc", "memory"
+      : TCMALLOC_RSEQ_CLOBBER, "memory"
 #if TCMALLOC_INTERNAL_PERCPU_USE_RSEQ_ASM_GOTO_OUTPUT
+      , "cc"
       : underflow_path
 #endif
   );
